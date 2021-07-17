@@ -35,5 +35,9 @@ type DigestItem = {
   url: string
 }
 
-export type { Log, DigestItem, Method }
+type FilterQuery = {
+  methods: Method[]
+}
+
+export type { Log, DigestItem, Method, FilterQuery }
 export { isMethod }

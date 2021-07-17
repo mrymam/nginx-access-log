@@ -1,4 +1,4 @@
-import type { Log, Method } from './types'
+import type { Log } from './types'
 import { isMethod } from './types'
 import * as ltsv from 'ltsv'
 
