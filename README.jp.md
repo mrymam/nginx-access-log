@@ -1,10 +1,10 @@
 # nginx-access-log
 
-このモジュールは、JS/TSでnginxのアクセスログをパース/プロファイルします。
+これは、nginxのアクセスログをパース/プロファイルする[npm パッケージ](https://www.npmjs.com/package/nginx-access-log)です。
 
 ## インストール
 
-npmかyarnを使用
+npmまたはyarnを使用
 ```bash
 $ npm i nginx-log-profiler @type/nginx-log-profiler
 ```
@@ -41,4 +41,30 @@ console.log(result)
 //   }
 // ]
 
+```
+
+## nginxログ形式
+
+nginxのアクセスログは、以下のような形式で出力してください。
+
+```nginx
+http {
+  log_format ltsv "time:$time_local"
+    "\thost:$remote_addr"
+    "\tforwardedfor:$http_x_forwarded_for"
+    "\treq:$request"
+    "\tmethod:$request_method"
+    "\turi:$request_uri"
+    "\tstatus:$status"
+    "\tsize:$body_bytes_sent"
+    "\treferer:$http_referer"
+    "\tua:$http_user_agent"
+    "\treqtime:$request_time"
+    "\truntime:$upstream_http_x_runtime"
+    "\tapptime:$upstream_response_time"
+    "\tcache:$upstream_http_x_cache"
+    "\tvhost:$host";
+
+  access_log  /var/log/nginx/access.log ltsv;
+}
 ```

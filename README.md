@@ -1,6 +1,12 @@
 # nginx-access-log
 
-This module is JS/TS parser/profiler of nginx access log.
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+
+
+This is [npm package](https://www.npmjs.com/package/nginx-access-log) for parse/profile nginx access log.
+
+[Japanese README](https://github.com/onyanko-pon/nginx-access-log/blob/main/README.jp.md)
 
 ## Installation
 
@@ -40,4 +46,31 @@ console.log(result)
 //   }
 // ]
 
+```
+
+
+# nginx log format
+
+output nginx logs according to the following example
+
+```nginx
+http {
+  log_format ltsv "time:$time_local"
+    "\thost:$remote_addr"
+    "\tforwardedfor:$http_x_forwarded_for"
+    "\treq:$request"
+    "\tmethod:$request_method"
+    "\turi:$request_uri"
+    "\tstatus:$status"
+    "\tsize:$body_bytes_sent"
+    "\treferer:$http_referer"
+    "\tua:$http_user_agent"
+    "\treqtime:$request_time"
+    "\truntime:$upstream_http_x_runtime"
+    "\tapptime:$upstream_response_time"
+    "\tcache:$upstream_http_x_cache"
+    "\tvhost:$host";
+
+  access_log  /var/log/nginx/access.log ltsv;
+}
 ```
