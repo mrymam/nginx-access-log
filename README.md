@@ -1,6 +1,6 @@
 # nginx-access-log
 
-[[![NPM](https://nodei.co/npm/learnyoureact.png?downloads=true)](https://nodei.co/npm/nginx-access-log/)
+[![NPM](https://nodei.co/npm/learnyoureact.png?downloads=true)](https://nodei.co/npm/nginx-access-log/)
 
 This is [npm package](https://www.npmjs.com/package/nginx-access-log) for parse/profile nginx access log.
 
