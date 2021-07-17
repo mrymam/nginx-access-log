@@ -1,18 +1,139 @@
 import { describe, it } from "mocha"
 import { assert } from "chai"
-import { fileter } from '../src/profiler'
-import { parse } from '../src/parser'
-import type { Log, FilterQuery } from '../src/types';
+import { digest, fileter } from '../src/profiler'
+import type { Log, FilterQuery, DigestItem } from '../src/types'
 
-const line = "time:10/Jul/2021:13:37:14 +0000	host:192.168.144.1	forwardedfor:-	req:GET /fetch HTTP/1.1	status:403	method:GET	uri:/fetch	size:5	referer:http://127.0.0.1/channel/1	ua:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36	reqtime:0.003	cache:-	runtime:-	apptime:0.003	vhost:127.0.0.1"
+const baseLog: Log = {
+  time: new Date(),
+  host: "",
+  forwardedfor: "",
+  req: "",
+  status: 200,
+  method: "GET",
+  uri: "/a",
+  size: 100,
+  referer: "",
+  ua: "",
+  reqtime: 0.1,
+  cache: "",
+  runtime: "",
+  apptime: 0.1,
+  vhost: "",
+}
 
-describe('parser', () => {
-  const logs: Log[] = parse(line)
+describe('filter', () => {
 
   it('fileter method', () => {
+    const logs: Log[] = [
+      baseLog,
+      baseLog,
+      {
+        ...baseLog,
+        method: "POST",
+      }
+    ]
+
     const query: FilterQuery = { methods: ["GET"] }
     const query2: FilterQuery = { methods: ["POST"] }
-    assert.equal(fileter(logs, query).length, 1)
-    assert.equal(fileter(logs, query2).length, 0)
+    assert.equal(fileter(logs, query).length, 2)
+    assert.equal(fileter(logs, query2).length, 1)
+  })
+
+})
+
+describe('digest', () => {
+
+  it('count', () => {
+    const logs: Log[] = [
+      baseLog,
+      {
+        ...baseLog,
+        status: 300,
+      },
+      {
+        ...baseLog,
+        status: 499,
+      },
+      {
+        ...baseLog,
+        status: 500,
+      }
+    ]
+    const digests: DigestItem[] = digest(logs)
+    assert.equal(digests[0].count, 4)
+    assert.equal(digests[0].count2xx, 1)
+    assert.equal(digests[0].count3xx, 1)
+    assert.equal(digests[0].count4xx, 1)
+    assert.equal(digests[0].count5xx, 1)
+  })
+
+  it('reqtime', () => {
+    const logs: Log[] = [
+      baseLog,
+      {
+        ...baseLog,
+        reqtime: 0.2,
+      }
+    ]
+    const digests: DigestItem[] = digest(logs)
+    assert.equal(digests[0].sum, 0.3)
+    assert.equal(digests[0].average, 0.15)
+    assert.equal(digests[0].min, 0.1)
+    assert.equal(digests[0].max, 0.2)
+  })
+
+  it('separate by method', () => {
+    const logs: Log[] = [
+      baseLog,
+      {
+        ...baseLog,
+        method: "POST"
+      }
+    ]
+    const digests: DigestItem[] = digest(logs)
+    assert.equal(digests.length, 2)
+    assert.equal(digests[0].method, "GET")
+    assert.equal(digests[1].method, "POST")
+  })
+
+  it('separate by uri', () => {
+    const logs: Log[] = [
+      baseLog,
+      {
+        ...baseLog,
+        uri: "/b"
+      }
+    ]
+    const digests: DigestItem[] = digest(logs)
+    assert.equal(digests.length, 2)
+    assert.equal(digests[0].uri, "/a")
+    assert.equal(digests[1].uri, "/b")
+  })
+
+  it('separate by uri and method', () => {
+    const logs: Log[] = [
+      {
+        ...baseLog,
+        uri: "/a",
+        method: "GET"
+      },
+      {
+        ...baseLog,
+        uri: "/a",
+        method: "POST"
+      },
+      {
+        ...baseLog,
+        uri: "/b",
+        method: "GET"
+      },
+      {
+        ...baseLog,
+        uri: "/b",
+        method: "POST"
+      }
+    ]
+    const digests: DigestItem[] = digest(logs)
+    assert.equal(digests.length, 4)
   })
 })

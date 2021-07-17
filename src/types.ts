@@ -22,17 +22,21 @@ type Log = {
   vhost: string
 }
 
-
 type DigestItem = {
   count: number,
+  count2xx: number,
+  count3xx: number,
+  count4xx: number,
+  count5xx: number,
   min: number,
   max: number,
+  sum: number,
   average: number,
   maxBody: number,
   minBody: number,
   averageBody: number,
   method: Method,
-  url: string
+  uri: string
 }
 
 type FilterQuery = {
