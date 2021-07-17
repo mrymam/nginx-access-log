@@ -136,4 +136,23 @@ describe('digest', () => {
     const digests: DigestItem[] = digest(logs)
     assert.equal(digests.length, 4)
   })
+
+  it('size', () => {
+    const logs: Log[] = [
+      {
+        ...baseLog,
+        size: 100
+      },
+      {
+        ...baseLog,
+        size: 300
+      }
+    ]
+    const digests: DigestItem[] = digest(logs)
+    assert.equal(digests.length, 1)
+    assert.equal(digests[0].sumBody, 400)
+    assert.equal(digests[0].averageBody, 200)
+    assert.equal(digests[0].minBody, 100)
+    assert.equal(digests[0].maxBody, 300)
+  })
 })

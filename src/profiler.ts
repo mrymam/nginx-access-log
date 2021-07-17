@@ -30,6 +30,10 @@ const digest = (logs: Log[]): DigestItem[] => {
     const count4xx = logs.filter((log: Log) => log.status >= 400 && log.status < 500).length
     const count5xx = logs.filter((log: Log) => log.status >= 500).length
 
+    const bodies = logs.map((log: Log) => log.size)
+    const sumBody = bodies.reduce((sum: number, bodySize: number) => sum + bodySize, 0)
+    const averageBody = sumBody / bodies.length
+
     return {
       count: logs.length,
       count2xx,
@@ -40,9 +44,10 @@ const digest = (logs: Log[]): DigestItem[] => {
       max: Math.max(...reqtimes),
       sum: Math.floor(sum * 1000) / 1000,
       average: Math.floor(average * 1000) / 1000,
-      maxBody: 0,
-      minBody: 0,
-      averageBody: 0,
+      minBody: Math.min(...bodies),
+      maxBody: Math.max(...bodies),
+      averageBody: Math.floor(averageBody * 1000) / 1000,
+      sumBody: Math.floor(sumBody * 1000) / 1000,
       method: logs[0].method,
       uri: logs[0].uri
     }

@@ -35,6 +35,7 @@ type DigestItem = {
   maxBody: number,
   minBody: number,
   averageBody: number,
+  sumBody: number,
   method: Method,
   uri: string
 }
