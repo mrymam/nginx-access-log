@@ -1,4 +1,4 @@
-import type { Log, FilterQuery, DigestItem } from './types'
+import type { Log, FilterQuery, DigestItem, DigestQuery } from './types'
 
 const fileter = (logs: Log[], query: FilterQuery): Log[] => {
   return logs.filter((log: Log) => {
@@ -8,7 +8,30 @@ const fileter = (logs: Log[], query: FilterQuery): Log[] => {
 
 type digestHash = { [key: string]: Log[] }
 
-const digest = (logs: Log[]): DigestItem[] => {
+const updateUri = (logs: Log[], query: DigestQuery = { uriPatterns: [] }): Log[] => {
+
+  if (query.uriPatterns.length === 0) {
+    return logs
+  }
+
+  return logs.map((log: Log) => {
+
+    for (const uriPattern of query.uriPatterns) {
+      if (!log.uri.indexOf(uriPattern)) {
+        log = {
+          ...log,
+          uri: uriPattern
+        }
+      }
+    }
+    return log
+  })
+}
+
+const digest = (logs: Log[], query: DigestQuery = { uriPatterns: [] }): DigestItem[] => {
+
+  logs = updateUri(logs, query)
+
   const logsHash: digestHash = logs.reduce((hash: digestHash, log: Log) => {
     const key = `${log.method}-${log.uri}`
     if (!hash[key]) {

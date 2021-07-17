@@ -19,14 +19,26 @@ declare type Log = {
 };
 declare type DigestItem = {
     count: number;
+    count2xx: number;
+    count3xx: number;
+    count4xx: number;
+    count5xx: number;
     min: number;
     max: number;
+    sum: number;
     average: number;
     maxBody: number;
     minBody: number;
     averageBody: number;
+    sumBody: number;
     method: Method;
-    url: string;
+    uri: string;
 };
-export type { Log, DigestItem, Method };
+declare type FilterQuery = {
+    methods: Method[];
+};
+declare type DigestQuery = {
+    uriPatterns: string[];
+};
+export type { Log, DigestItem, Method, FilterQuery, DigestQuery };
 export { isMethod };

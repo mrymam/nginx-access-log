@@ -155,4 +155,19 @@ describe('digest', () => {
     assert.equal(digests[0].minBody, 100)
     assert.equal(digests[0].maxBody, 300)
   })
+
+  it('merge uri', () => {
+    const logs: Log[] = [
+      {
+        ...baseLog,
+        uri: "/icons/aa.jpeg"
+      },
+      {
+        ...baseLog,
+        uri: "/icons/bb.jpeg"
+      }
+    ]
+    const digests: DigestItem[] = digest(logs, { uriPatterns: ["/icons"] })
+    assert.equal(digests.length, 1)
+  })
 })

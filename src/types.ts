@@ -44,5 +44,9 @@ type FilterQuery = {
   methods: Method[]
 }
 
-export type { Log, DigestItem, Method, FilterQuery }
+type DigestQuery = {
+  uriPatterns: string[]
+}
+
+export type { Log, DigestItem, Method, FilterQuery, DigestQuery }
 export { isMethod }
