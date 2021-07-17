@@ -1,10 +1,16 @@
+type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | '' | '-'
+
+const isMethod = (methodStr: string): methodStr is Method => {
+  return ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', '', '-'].includes(methodStr)
+}
+
 type Log = {
   time: Date,
   host: string,
   forwardedfor: string,
   req: string,
   status: number,
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | '' | '-',
+  method: Method,
   uri: string,
   size: number,
   referer: string,
@@ -25,6 +31,9 @@ type DigestItem = {
   maxBody: number,
   minBody: number,
   averageBody: number,
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | '' | '-',
+  method: Method,
   url: string
 }
+
+export type { Log, DigestItem, Method }
+export { isMethod }
