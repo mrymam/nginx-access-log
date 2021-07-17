@@ -1,5 +1,5 @@
-function hi(name: string) {
-  console.log(`Hello ${name}`);
+function hi(name: string): string {
+  return `Hello ${name}`
 }
 
 export default hi;
