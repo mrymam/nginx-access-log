@@ -5,6 +5,10 @@
   "main": "dist/index.js",
   "author": "onyanko-pon",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onyanko-pon/nginx-access-log.git"
+  },
   "files": [
     "dist"
   ],
