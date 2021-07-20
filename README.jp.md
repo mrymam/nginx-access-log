@@ -1,6 +1,6 @@
 # nginx-access-log
 
-[![NPM](https://nodei.co/npm/learnyoureact.png?downloads=true)](https://nodei.co/npm/nginx-access-log/)
+[![NPM](https://nodei.co/npm/nginx-access-log.png?downloads=true)](https://nodei.co/npm/nginx-access-log/)
 
 これは、nginxのアクセスログをパース/プロファイルする[npm パッケージ](https://www.npmjs.com/package/nginx-access-log)です。
 
