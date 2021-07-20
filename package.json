@@ -1,6 +1,6 @@
 {
   "name": "nginx-access-log",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "nginx access log profiler/parser",
   "main": "dist/index.js",
   "author": "onyanko-pon",
