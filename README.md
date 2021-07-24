@@ -154,11 +154,11 @@ console.log(logsFilterd)
 import type { Log, DigestQuery, DigestItem } from 'nginx-access-log'
 import { parse, digest } from 'nginx-access-log'
 
-const logData: string = "time:10/Jul/2021:13:37:14 +0000	host:192.168.144.1	forwardedfor:-	req:GET /users/1 HTTP/1.1	status:403	method:GET	uri:/users/1 size:5	referer:http://127.0.0.1/channel/1	ua:IPhone	reqtime:0.003	cache:-	runtime:-	apptime:0.003	vhost:127.0.0.1"  + "\n" + 
-"time:10/Jul/2021:13:37:14 +0000	host:192.168.144.1	forwardedfor:-	req:GET /users/2 HTTP/1.1	status:403	method:GET	uri:/users/2	size:5	referer:http://127.0.0.1/channel/1	ua:IPhone	reqtime:0.003	cache:-	runtime:-	apptime:0.003	vhost:127.0.0.1" 
+const logData: string = "time:10/Jul/2021:13:37:14 +0000	host:192.168.144.1	forwardedfor:-	req:GET /users/1 HTTP/1.1	status:403	method:GET	uri:/users/1	size:5	referer:http://127.0.0.1/channel/1	ua:IPhone	reqtime:0.003	cache:-	runtime:-	apptime:0.003	vhost:127.0.0.1" + "\n" +
+  "time:10/Jul/2021:13:37:14 +0000	host:192.168.144.1	forwardedfor:-	req:GET /users/2 HTTP/1.1	status:403	method:GET	uri:/users/2	size:5	referer:http://127.0.0.1/channel/1	ua:IPhone	reqtime:0.003	cache:-	runtime:-	apptime:0.003	vhost:127.0.0.1"
 
 const logs: Log[] = parse(logData)
-const query: DigestQuery = {uriPatterns: ["/users/"]}
+const query: DigestQuery = { uriPatterns: ["/users/"] }
 const result: DigestItem[] = digest(logs, query)
 console.log(result)
 
@@ -173,10 +173,10 @@ console.log(result)
 //     max: 0.003,
 //     sum: 0.006,
 //     average: 0.003,
-//     minBody: NaN,
-//     maxBody: NaN,
-//     averageBody: NaN,
-//     sumBody: NaN,
+//     minBody: 5,
+//     maxBody: 5,
+//     averageBody: 5,
+//     sumBody: 10,
 //     method: 'GET',
 //     uri: '/users/'
 //   }
