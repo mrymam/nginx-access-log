@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.digest = exports.fileter = void 0;
-const fileter = (logs, query) => {
+exports.digest = exports.filter = void 0;
+const filter = (logs, query) => {
     return logs.filter((log) => {
         return query.methods.includes(log.method);
     });
 };
-exports.fileter = fileter;
+exports.filter = filter;
 const updateUri = (logs, query = { uriPatterns: [] }) => {
     if (query.uriPatterns.length === 0) {
         return logs;

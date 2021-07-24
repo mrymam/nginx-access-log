@@ -21,7 +21,7 @@ const baseLog = {
     vhost: "",
 };
 mocha_1.describe('filter', () => {
-    mocha_1.it('fileter method', () => {
+    mocha_1.it('filter method', () => {
         const logs = [
             baseLog,
             baseLog,
@@ -32,8 +32,8 @@ mocha_1.describe('filter', () => {
         ];
         const query = { methods: ["GET"] };
         const query2 = { methods: ["POST"] };
-        chai_1.assert.equal(profiler_1.fileter(logs, query).length, 2);
-        chai_1.assert.equal(profiler_1.fileter(logs, query2).length, 1);
+        chai_1.assert.equal(profiler_1.filter(logs, query).length, 2);
+        chai_1.assert.equal(profiler_1.filter(logs, query2).length, 1);
     });
 });
 mocha_1.describe('digest', () => {

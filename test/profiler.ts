@@ -1,6 +1,6 @@
 import { describe, it } from "mocha"
 import { assert } from "chai"
-import { digest, fileter } from '../src/profiler'
+import { digest, filter } from '../src/profiler'
 import type { Log, FilterQuery, DigestItem } from '../src/types'
 
 const baseLog: Log = {
@@ -23,7 +23,7 @@ const baseLog: Log = {
 
 describe('filter', () => {
 
-  it('fileter method', () => {
+  it('filter method', () => {
     const logs: Log[] = [
       baseLog,
       baseLog,
@@ -35,8 +35,8 @@ describe('filter', () => {
 
     const query: FilterQuery = { methods: ["GET"] }
     const query2: FilterQuery = { methods: ["POST"] }
-    assert.equal(fileter(logs, query).length, 2)
-    assert.equal(fileter(logs, query2).length, 1)
+    assert.equal(filter(logs, query).length, 2)
+    assert.equal(filter(logs, query2).length, 1)
   })
 
 })

@@ -1,6 +1,6 @@
 import type { Log, FilterQuery, DigestItem, DigestQuery } from './types'
 
-const fileter = (logs: Log[], query: FilterQuery): Log[] => {
+const filter = (logs: Log[], query: FilterQuery): Log[] => {
   return logs.filter((log: Log) => {
     return query.methods.includes(log.method)
   })
@@ -77,4 +77,4 @@ const digest = (logs: Log[], query: DigestQuery = { uriPatterns: [] }): DigestIt
   })
 }
 
-export { fileter, digest }
+export { filter, digest }
