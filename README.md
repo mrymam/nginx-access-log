@@ -91,27 +91,66 @@ import { parse } from 'nginx-access-log'
 const logData: string = "time:10/Jul/2021:13:37:14 +0000	host:192.168.144.1	forwardedfor:-	req:GET /fetch HTTP/1.1	status:403	method:GET	uri:/fetch	size:5	referer:http://127.0.0.1/channel/1	ua:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36	reqtime:0.003	cache:-	runtime:-	apptime:0.003	vhost:127.0.0.1"
 const logs: Log[] = parse(logData)
 console.log(logs)
+
+// [
+//   {
+//     time: 2021-07-10T13:37:14.000Z,
+//     host: '192.168.144.1',
+//     forwardedfor: '-',
+//     req: 'GET /fetch HTTP/1.1',
+//     status: 403,
+//     method: 'GET',
+//     uri: '/fetch',
+//     size: 5,
+//     referer: 'http://127.0.0.1/channel/1',
+//     ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36',
+//     reqtime: 0.003,
+//     cache: '-',
+//     runtime: '-',
+//     apptime: 0.003,
+//     vhost: '127.0.0.1'
+//   }
+// ]
 ```
 
 ### filter
 
 ```typescript
-import type { Log,  FilterQuery } from 'nginx-access-log'
+import type { Log, FilterQuery } from 'nginx-access-log'
 import { parse, filter } from 'nginx-access-log'
 
-const logData: string = "time:10/Jul/2021:13:37:14 +0000	host:192.168.144.1	forwardedfor:-	req:GET /fetch HTTP/1.1	status:403	method:GET	uri:/fetch	size:5	referer:http://127.0.0.1/channel/1	ua:IPhone	reqtime:0.003	cache:-	runtime:-	apptime:0.003	vhost:127.0.0.1"  + "\n" + 
-"time:10/Jul/2021:13:37:14 +0000	host:192.168.144.1	forwardedfor:-	req:POST /post HTTP/1.1	status:403	method:POST	uri:/post	size:5	referer:http://127.0.0.1/channel/1	ua:IPhone	reqtime:0.003	cache:-	runtime:-	apptime:0.003	vhost:127.0.0.1" 
+const logData: string = "time:10/Jul/2021:13:37:14 +0000	host:192.168.144.1	forwardedfor:-	req:GET /fetch HTTP/1.1	status:403	method:GET	uri:/fetch	size:5	referer:http://127.0.0.1/channel/1	ua:IPhone	reqtime:0.003	cache:-	runtime:-	apptime:0.003	vhost:127.0.0.1" + "\n" +
+  "time:10/Jul/2021:13:37:14 +0000	host:192.168.144.1	forwardedfor:-	req:POST /post HTTP/1.1	status:403	method:POST	uri:/post	size:5	referer:http://127.0.0.1/channel/1	ua:IPhone	reqtime:0.003	cache:-	runtime:-	apptime:0.003	vhost:127.0.0.1"
 
 const logs: Log[] = parse(logData)
-const query: FilterQuery = {method: "GET"}
+const query: FilterQuery = { methods: ["GET"] }
 const logsFilterd: Log[] = filter(logs, query)
 console.log(logsFilterd)
+
+// [
+//   {
+//     time: 2021-07-10T13:37:14.000Z,
+//     host: '192.168.144.1',
+//     forwardedfor: '-',
+//     req: 'GET /fetch HTTP/1.1',
+//     status: 403,
+//     method: 'GET',
+//     uri: '/fetch',
+//     size: 5,
+//     referer: 'http://127.0.0.1/channel/1',
+//     ua: 'IPhone',
+//     reqtime: 0.003,
+//     cache: '-',
+//     runtime: '-',
+//     apptime: 0.003,
+//     vhost: '127.0.0.1'
+//   }
+// ]
 ```
 
 ### digest
 
 ```typescript
-
 import type { Log, DigestQuery, DigestItem } from 'nginx-access-log'
 import { parse, digest } from 'nginx-access-log'
 
@@ -122,6 +161,26 @@ const logs: Log[] = parse(logData)
 const query: DigestQuery = {uriPatterns: ["/users/"]}
 const result: DigestItem[] = digest(logs, query)
 console.log(result)
+
+// [
+//   {
+//     count: 2,
+//     count2xx: 0,
+//     count3xx: 0,
+//     count4xx: 2,
+//     count5xx: 0,
+//     min: 0.003,
+//     max: 0.003,
+//     sum: 0.006,
+//     average: 0.003,
+//     minBody: NaN,
+//     maxBody: NaN,
+//     averageBody: NaN,
+//     sumBody: NaN,
+//     method: 'GET',
+//     uri: '/users/'
+//   }
+// ]
 ```
 # nginx log format
 
