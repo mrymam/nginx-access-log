@@ -10,7 +10,7 @@ This is [npm package](https://www.npmjs.com/package/nginx-access-log) for parse/
 
 Using npm or yarn
 ```bash
-$ npm i nginx-log-profiler
+$ npm i nginx-access-log
 ```
 
 ## Usage

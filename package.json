@@ -1,6 +1,6 @@
 {
   "name": "nginx-access-log",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "nginx access log profiler/parser",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",

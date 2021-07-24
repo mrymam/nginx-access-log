@@ -8,7 +8,7 @@
 
 npmまたはyarnを使用
 ```bash
-$ npm i nginx-log-profiler
+$ npm i nginx-access-log
 ```
 
 ## 使用例
