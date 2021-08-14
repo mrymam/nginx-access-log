@@ -34,7 +34,9 @@ const parseLine = (lineStr) => {
 };
 const parse = (data) => {
     const lines = data.split("\n");
-    return lines.map(line => {
+    return lines.filter(line => {
+        return line.indexOf(':') >= 0;
+    }).map(line => {
         return parseLine(line);
     });
 };

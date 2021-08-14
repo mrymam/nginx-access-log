@@ -23,4 +23,8 @@ mocha_1.describe('parser', () => {
         chai_1.assert.equal(logs[1].uri, "/fetch");
         chai_1.assert.equal(logs[1].reqtime, 0.003);
     });
+    mocha_1.it('with empty line', () => {
+        const logs = parser_1.parse(line + "\n ");
+        chai_1.assert.equal(logs.length, 1);
+    });
 });
