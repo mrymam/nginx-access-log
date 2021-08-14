@@ -38,7 +38,10 @@ const parseLine = (lineStr: string): Log => {
 
 const parse = (data: string): Log[] => {
   const lines: string[] = data.split("\n")
-  return lines.map(line => {
+
+  return lines.filter(line => {
+    return line.indexOf(':') >= 0
+  }).map(line => {
     return parseLine(line)
   })
 }

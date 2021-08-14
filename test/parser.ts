@@ -28,4 +28,9 @@ describe('parser', () => {
     assert.equal(logs[1].uri, "/fetch")
     assert.equal(logs[1].reqtime, 0.003)
   })
+
+  it('with empty line', () => {
+    const logs: Log[] = parse(line + "\n ")
+    assert.equal(logs.length, 1)
+  })
 })
