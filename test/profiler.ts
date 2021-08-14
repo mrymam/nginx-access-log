@@ -170,4 +170,35 @@ describe('digest', () => {
     const digests: DigestItem[] = digest(logs, { uriPatterns: ["/icons"] })
     assert.equal(digests.length, 1)
   })
+
+  it('merge uri with regrex', () => {
+    const logs: Log[] = [
+      {
+        ...baseLog,
+        uri: "/teams/1/users"
+      },
+      {
+        ...baseLog,
+        uri: "/teams/2/users"
+      }
+    ]
+    const digests: DigestItem[] = digest(logs, { uriPatterns: ["^/teams/[0-9]+/users"] })
+    assert.equal(digests.length, 1)
+    assert.equal(digests[0].uri, "^/teams/[0-9]+/users")
+  })
+
+  it('merge 正規表現にマッチしないもの', () => {
+    const logs: Log[] = [
+      {
+        ...baseLog,
+        uri: "/teams/1/users"
+      },
+      {
+        ...baseLog,
+        uri: "/teams/2/users"
+      }
+    ]
+    const digests: DigestItem[] = digest(logs, { uriPatterns: ["^/users"] })
+    assert.equal(digests.length, 2)
+  })
 })

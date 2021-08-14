@@ -158,4 +158,33 @@ mocha_1.describe('digest', () => {
         const digests = profiler_1.digest(logs, { uriPatterns: ["/icons"] });
         chai_1.assert.equal(digests.length, 1);
     });
+    mocha_1.it('merge uri with regrex', () => {
+        const logs = [
+            {
+                ...baseLog,
+                uri: "/teams/1/users"
+            },
+            {
+                ...baseLog,
+                uri: "/teams/2/users"
+            }
+        ];
+        const digests = profiler_1.digest(logs, { uriPatterns: ["^/teams/[0-9]+/users"] });
+        chai_1.assert.equal(digests.length, 1);
+        chai_1.assert.equal(digests[0].uri, "^/teams/[0-9]+/users");
+    });
+    mocha_1.it('merge 正規表現にマッチしないもの', () => {
+        const logs = [
+            {
+                ...baseLog,
+                uri: "/teams/1/users"
+            },
+            {
+                ...baseLog,
+                uri: "/teams/2/users"
+            }
+        ];
+        const digests = profiler_1.digest(logs, { uriPatterns: ["^/users"] });
+        chai_1.assert.equal(digests.length, 2);
+    });
 });

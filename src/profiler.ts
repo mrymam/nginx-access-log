@@ -17,11 +17,12 @@ const updateUri = (logs: Log[], query: DigestQuery = { uriPatterns: [] }): Log[]
   return logs.map((log: Log) => {
 
     for (const uriPattern of query.uriPatterns) {
-      if (!log.uri.indexOf(uriPattern)) {
+      if ((new RegExp(uriPattern)).test(log.uri)) {
         log = {
           ...log,
           uri: uriPattern
         }
+        return log
       }
     }
     return log

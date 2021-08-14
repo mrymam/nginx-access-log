@@ -13,11 +13,12 @@ const updateUri = (logs, query = { uriPatterns: [] }) => {
     }
     return logs.map((log) => {
         for (const uriPattern of query.uriPatterns) {
-            if (!log.uri.indexOf(uriPattern)) {
+            if ((new RegExp(uriPattern)).test(log.uri)) {
                 log = {
                     ...log,
                     uri: uriPattern
                 };
+                return log;
             }
         }
         return log;
