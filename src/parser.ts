@@ -40,7 +40,13 @@ const parse = (data: string): Log[] => {
   const lines: string[] = data.split("\n")
 
   return lines.filter(line => {
-    return line.indexOf(':') >= 0
+    try {
+      ltsv.parseLine(line)
+      return true
+    } catch (e) {
+      return false
+    }
+    // return line.indexOf(':') >= 0
   }).map(line => {
     return parseLine(line)
   })
